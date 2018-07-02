@@ -1,5 +1,8 @@
+* {
+  transition: all 500ms ease;
+}
 body {
-  padding-top: 7vh;
+  padding-top: 60px;
   background: #dadada;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
@@ -15,7 +18,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 7vh;
+  height: 60px;
   border-bottom: 2px solid #aaa;
   position: fixed;
   top: 0;
@@ -37,14 +40,17 @@ body {
 .header-busca-campo {
   padding: .5em;
   margin-left: 1em;
-  background: #fafafa;
+  background: #ebebeb;
   border: 1px solid #dbdbdb;
   color: #262626;
 }
 
 .header-busca-campo:focus {
   background: #fff;
-  outline: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  outline: none;
   color: #222;
 }
 
@@ -53,11 +59,11 @@ body {
   background: url(../images/busca-icone.png) center center no-repeat #069;
   text-indent: -9999px;
   overflow: hidden;
+  outline: none;
   background-size: 20px;
   color: #fff;
   min-width: 32px;
-  height: 2.4em;
-  transition: .4s;
+  height: 36px;
 }
 
 .header-busca-submit:hover {
@@ -65,13 +71,18 @@ body {
 }
 
 .header-nav {
-  list-style: none
+  list-style: none;
+}
+
+.header-nav-item {
+  display: inline;
+  padding: 0px 20px;
 }
 
 .header-nav-item a {
   text-decoration: none;
   color: #069;
-  font-size: 3em;
+  font-size: 1.5em;
 }
 
 .header-nav-item a:hover {
@@ -177,7 +188,6 @@ body {
   height: 44px;
   text-indent: -9999px;
   display: inline-block;
-  transition: .4s;
   margin-right: 1em;
 }
 

@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 
-export default class Login extends Component {
-  constructor() {
-    super()
+class Login extends Component {
+  constructor(props) {
+    super(props)
     this.state = {
-      msg: '',
+      msg: this.props.location.state ? this.props.location.state.msg : '',
       loginAutorizado: false
     }
   }
@@ -54,3 +55,5 @@ export default class Login extends Component {
     )
   }
 }
+
+export default withRouter(Login)

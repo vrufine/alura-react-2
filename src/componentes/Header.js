@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
 export default class Header extends Component {
   render = () => (
@@ -16,6 +17,9 @@ export default class Header extends Component {
             <a href="">
               ♡
             </a>
+          </li>
+          <li className="header-nav-item">
+            <Link to="/logout">Sair</Link>
           </li>
         </ul>
       </nav>

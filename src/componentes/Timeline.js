@@ -27,9 +27,18 @@ export default class Timeline extends Component {
 
   buscarFotos = () => {
     fetch(`http://localhost:8080/api/fotos?X-AUTH-TOKEN=${window.localStorage.getItem('auth-token')}`)
-      .then(res => res.json())
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        } else {
+          throw new Error('Não foi possível buscar as fotos.')
+        }
+      })
       .then(fotos => {
         this.setState({ fotos });
-      });
+      })
+      .catch(error => {
+        console.error(error.message)
+      })
   }
 }
