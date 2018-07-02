@@ -7,7 +7,7 @@ class FotoHeader extends Component {
       <figure className="foto-usuario">
         <img src={this.props.foto.urlPerfil} alt="foto do usuario" />
         <figcaption className="foto-usuario">
-          <a href="#">
+          <a href="">
             {this.props.foto.loginUsuario}
           </a>
         </figcaption>
@@ -19,11 +19,11 @@ class FotoHeader extends Component {
 
 class FotoInfo extends Component {
   render = () => (
-    <div className="foto-in fo">
+    <div className="foto-info">
       <div className="foto-info-likes">
         {
           this.props.foto.likers.map(liker => {
-            return (<a href="#">{liker.login},</a>)
+            return (<a key={JSON.stringify(liker)} href="">{liker.login},</a>)
           })
         }
 
@@ -40,7 +40,7 @@ class FotoInfo extends Component {
         {
           this.props.foto.comentarios.map(comentario => {
             return (
-              <li className="comentario">
+              <li key={JSON.stringify(comentario)} className="comentario">
                 <a className="foto-info-autor">{comentario.login} </a>
                 {comentario.texto}
               </li>
@@ -55,7 +55,7 @@ class FotoInfo extends Component {
 class FotoAtualizacoes extends Component {
   render = () => (
     <section className="fotoAtualizacoes">
-      <a href="#" className="fotoAtualizacoes-like">Likar</a>
+      <a href="" className="fotoAtualizacoes-like">Likar</a>
       <form className="fotoAtualizacoes-form">
         <input type="text" placeholder="Adicione um comentário..." className="fotoAtualizacoes-form-campo" />
         <input type="submit" value="Comentar!" className="fotoAtualizacoes-form-submit" />
