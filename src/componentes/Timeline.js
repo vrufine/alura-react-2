@@ -1,10 +1,27 @@
 import React, { Component } from 'react'
-import Foto from './Foto'
+import FotoItem from './Foto'
 
 export default class Timeline extends Component {
+  constructor() {
+    super()
+    this.state = {
+      fotos: []
+    }
+  }
+  componentDidMount() {
+    fetch('http://localhost:8080/fotos/')
+      .then(res => res.json())
+      .then(fotos => {
+        this.setState({ fotos })
+      })
+  }
   render = () => (
     <div className="fotos container">
-      <Foto />
+      {
+        this.state.fotos.map((foto, i) => (
+          <FotoItem key={JSON.stringify(foto)} foto={foto} />
+        ))
+      }
     </div>
   )
 }

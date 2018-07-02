@@ -6,7 +6,7 @@ class App extends Component {
   render() {
     return (
       <div id="root">
-        <div data-reactroot="" className="main">
+        <div className="main">
           <Header/>
           <Timeline/>
         </div>
