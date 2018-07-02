@@ -7,37 +7,45 @@ class FotoHeader extends Component {
       <figure className="foto-usuario">
         <img src={this.props.foto.urlPerfil} alt="foto do usuario" />
         <figcaption className="foto-usuario">
-          <a href="#"> {this.props.foto.loginUsuario} </a>
+          <a href="#">
+            {this.props.foto.loginUsuario}
+          </a>
         </figcaption>
       </figure>
-      <time className="foto-data"> {this.props.foto.horario} </time>
+      <time className="foto-data">{this.props.foto.horario}</time>
     </header>
   )
 }
 
 class FotoInfo extends Component {
-
   render = () => (
-    <div className="foto-info">
+    <div className="foto-in fo">
       <div className="foto-info-likes">
         {
           this.props.foto.likers.map(liker => {
-            return <a key={JSON.stringify(liker)} href="#">{liker.login}</a>
+            return (<a href="#">{liker.login},</a>)
           })
-        } curtiram
-      </div>
+        }
+
+        curtiram
+
+              </div>
+
       <p className="foto-info-legenda">
-        <a className="foto-info-autor">{this.props.foto.loginUsuario} </a>
+        <a className="foto-info-autor">autor </a>
         {this.props.foto.comentario}
       </p>
+
       <ul className="foto-info-comentarios">
         {
-          this.props.foto.comentarios.map(comentario => (
-            <li className="comentario">
-              <a className="foto-info-autor">{comentario.login} </a>
-              {comentario.texto}
-            </li>
-          ))
+          this.props.foto.comentarios.map(comentario => {
+            return (
+              <li className="comentario">
+                <a className="foto-info-autor">{comentario.login} </a>
+                {comentario.texto}
+              </li>
+            );
+          })
         }
       </ul>
     </div>
@@ -61,7 +69,7 @@ export default class Foto extends Component {
   render = () => (
     <div className="foto">
       <FotoHeader foto={this.props.foto} />
-      <img alt="foto" className="foto-src" src="https://dummyimage.com/1000/0066aa/fff" />
+      <img alt="foto" className="foto-src" src={this.props.foto.urlFoto} />
       <FotoInfo foto={this.props.foto} />
       <FotoAtualizacoes />
     </div>
