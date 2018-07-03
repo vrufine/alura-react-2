@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 export default class Header extends Component {
   render = () => (
     <header className="header container">
-      <h1 className="header-logo">
-        InstAlura
-      </h1>
+      <Link to="/timeline" className="header-logo">
+        Instalura
+      </Link>
       <form lpformnum="1" className="header-busca">
         <input type="text" name="search" placeholder="Pesquisa" className="header-busca-campo" />
         <input type="submit" value="Buscar" className="header-busca-submit" />

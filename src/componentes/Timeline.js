@@ -5,14 +5,27 @@ import Header from './Header'
 export default class Timeline extends Component {
   constructor(props) {
     super(props)
-    console.log(props)
     this.state = {
       fotos: []
     }
+    this.login = this.props.login
   }
+
   componentDidMount() {
     this.buscarFotos()
   }
+
+  componentWillUpdate() {
+    this.buscarFotos()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.login) {
+      this.login = nextProps.login
+      this.buscarFotos()
+    }
+  }
+
   render = () => {
     return (
       <div id='timeline'>
@@ -30,8 +43,8 @@ export default class Timeline extends Component {
 
   buscarFotos() {
     const endpoint =
-      this.props.login
-        ? `http://localhost:8080/api/public/fotos/${this.props.login}`
+      this.login
+        ? `http://localhost:8080/api/public/fotos/${this.login}`
         : `http://localhost:8080/api/fotos?X-AUTH-TOKEN=${window.localStorage.getItem('auth-token')}`
     fetch(endpoint)
       .then(res => {
