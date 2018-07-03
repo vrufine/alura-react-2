@@ -15,10 +15,6 @@ export default class Timeline extends Component {
     this.buscarFotos()
   }
 
-  componentWillUpdate() {
-    this.buscarFotos()
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.login) {
       this.login = nextProps.login
