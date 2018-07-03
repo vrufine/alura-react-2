@@ -11,7 +11,7 @@ import Login from './componentes/Login';
 import Logout from './componentes/Logout';
 
 const authCheck = (nextState, replace) => {
-  if (!window.localStorage.getItem('auth-token')) {
+  if (!nextState.match.params.login && !window.localStorage.getItem('auth-token')) {
     return <Redirect push from="/timeline" to={{ pathname: '/', state: { msg: 'Você precisa estar logado.' } }} />
   }
   return <Timeline />
@@ -22,7 +22,7 @@ ReactDOM.render(
     <App>
       <Switch>
         <Route exact path="/" component={Login} />
-        <Route path="/timeline" render={authCheck} />
+        <Route path="/timeline/:login?" render={authCheck} />
         <Route path="/logout" component={Logout} />
       </Switch>
     </App>
