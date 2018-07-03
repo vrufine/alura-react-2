@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
+import { Link } from "react-router-dom";
 
 class FotoHeader extends Component {
-
   render = () => (
     <header className="foto-header">
       <figure className="foto-usuario">
         <img src={this.props.foto.urlPerfil} alt="foto do usuario" />
         <figcaption className="foto-usuario">
-          <a href="">
+          <Link to={`/timeline/${this.props.foto.loginUsuario}`}>
             {this.props.foto.loginUsuario}
-          </a>
+          </Link>
         </figcaption>
       </figure>
       <time className="foto-data">{this.props.foto.horario}</time>
@@ -23,17 +23,12 @@ class FotoInfo extends Component {
       <div className="foto-info-likes">
         {
           this.props.foto.likers.map(liker => {
-            return (<a key={JSON.stringify(liker)} href="">{liker.login},</a>)
+            return (<Link key={JSON.stringify(liker)} to={`/timeline/${liker.login}`}>{liker.login},</Link>)
           })
-        }
-
-        curtiram
-
-              </div>
-
+        }curtiram
+      </div>
       <p className="foto-info-legenda">
-        <a className="foto-info-autor">autor </a>
-        {this.props.foto.comentario}
+        <Link className="foto-info-autor" to={`/timeline/${this.props.foto.loginUsuario}`}>{this.props.foto.loginUsuario}</Link> {this.props.foto.comentario}
       </p>
 
       <ul className="foto-info-comentarios">
@@ -41,8 +36,7 @@ class FotoInfo extends Component {
           this.props.foto.comentarios.map(comentario => {
             return (
               <li key={JSON.stringify(comentario)} className="comentario">
-                <a className="foto-info-autor">{comentario.login} </a>
-                {comentario.texto}
+                <Link to={`/timeline/${comentario.login}`} className="foto-info-autor">{comentario.login} </Link> {comentario.texto}
               </li>
             );
           })

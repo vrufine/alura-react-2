@@ -3,30 +3,37 @@ import FotoItem from './Foto'
 import Header from './Header'
 
 export default class Timeline extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
+    console.log(props)
     this.state = {
       fotos: []
     }
   }
   componentDidMount() {
-    this.buscarFotos();
+    this.buscarFotos()
   }
-  render = () => (
-    <div id="timeline">
-      <Header/>
-      <div className="fotos container">
-        {
-          this.state.fotos.map((foto, i) => (
-            <FotoItem key={JSON.stringify(foto)} foto={foto} />
-          ))
-        }
+  render = () => {
+    return (
+      <div id='timeline'>
+        <Header />
+        <div className='fotos container'>
+          {
+            this.state.fotos.map((foto, i) => (
+              <FotoItem key={JSON.stringify(foto)} foto={foto} />
+            ))
+          }
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 
-  buscarFotos = () => {
-    fetch(`http://localhost:8080/api/fotos?X-AUTH-TOKEN=${window.localStorage.getItem('auth-token')}`)
+  buscarFotos() {
+    const endpoint =
+      this.props.login
+        ? `http://localhost:8080/api/public/fotos/${this.props.login}`
+        : `http://localhost:8080/api/fotos?X-AUTH-TOKEN=${window.localStorage.getItem('auth-token')}`
+    fetch(endpoint)
       .then(res => {
         if (res.ok) {
           return res.json()
@@ -35,7 +42,7 @@ export default class Timeline extends Component {
         }
       })
       .then(fotos => {
-        this.setState({ fotos });
+        this.setState({ fotos })
       })
       .catch(error => {
         console.error(error.message)
