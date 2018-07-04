@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import FotoItem from './Foto'
 import Header from './Header'
+import PubSub from 'pubsub-js'
 
 export default class Timeline extends Component {
   constructor(props) {
@@ -9,6 +10,12 @@ export default class Timeline extends Component {
       fotos: []
     }
     this.login = this.props.login
+  }
+
+  componentWillMount() {
+    PubSub.subscribe('timeline', (topic, { fotos }) => {
+      this.setState({ fotos })
+    })
   }
 
   componentDidMount() {
@@ -20,21 +27,6 @@ export default class Timeline extends Component {
       this.login = nextProps.login
       this.buscarFotos()
     }
-  }
-
-  render = () => {
-    return (
-      <div id='timeline'>
-        <Header />
-        <div className='fotos container'>
-          {
-            this.state.fotos.map((foto, i) => (
-              <FotoItem key={JSON.stringify(foto)} foto={foto} />
-            ))
-          }
-        </div>
-      </div>
-    )
   }
 
   buscarFotos() {
@@ -56,5 +48,20 @@ export default class Timeline extends Component {
       .catch(error => {
         console.error(error.message)
       })
+  }
+
+  render = () => {
+    return (
+      <div id='timeline'>
+        <Header />
+        <div className='fotos container'>
+          {
+            this.state.fotos.map((foto, i) => (
+              <FotoItem key={JSON.stringify(foto)} foto={foto} />
+            ))
+          }
+        </div>
+      </div>
+    )
   }
 }
