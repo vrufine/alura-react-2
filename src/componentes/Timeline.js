@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import FotoItem from './Foto'
 import Header from './Header'
 import PubSub from 'pubsub-js'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 export default class Timeline extends Component {
   constructor(props) {
@@ -55,11 +56,19 @@ export default class Timeline extends Component {
       <div id='timeline'>
         <Header />
         <div className='fotos container'>
-          {
-            this.state.fotos.map((foto, i) => (
-              <FotoItem key={JSON.stringify(foto)} foto={foto} />
-            ))
-          }
+          <TransitionGroup>            
+            {
+              this.state.fotos.map((foto, i) => (
+                <CSSTransition
+                  key={JSON.stringify(foto)}
+                  timeout={500}
+                  classNames="fade"
+                >
+                  <FotoItem key={JSON.stringify(foto)} foto={foto} />
+                </CSSTransition>
+              ))
+            }
+          </TransitionGroup>
         </div>
       </div>
     )

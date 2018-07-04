@@ -225,3 +225,23 @@ body {
   color: #fff;
   height: 2.4em;
 }
+
+
+/* Transitions */
+
+.fade-enter {
+  opacity: 0.01;
+  transition: all 500ms ease;
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: all 500ms ease;
+}
+.fade-exit {
+  opacity: 1;
+  transition: all 500ms ease;
+}
+.fade-exit-active {
+  opacity: 0;
+  transition: all 500ms ease;
+}
