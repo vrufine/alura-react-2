@@ -22,33 +22,34 @@ class FotoInfo extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      likers: this.props.foto.likers
+      likers: this.props.foto.likers,
+      comentarios: this.props.foto.comentarios
     }
   }
 
   componentDidMount() {
     PubSub.subscribe('atualiza-liker', (topic, dados) => {
       if (this.props.foto.id === dados.fotoId) {
-        console.log(this.state.likers)
         const possivelLiker = dados.quemCurtiu
         const index = this.state.likers.findIndex(item => item.login === dados.quemCurtiu.login)
-        console.log(possivelLiker)
-
+        const novosLikers = this.state.likers
         if (index > -1) {
-          const novosLikers = this.state.likers
           novosLikers.splice(index, 1)
           this.setState({ likers: novosLikers })
         } else {
-          const novosLikers = this.state.likers;
           novosLikers.push(possivelLiker)
           this.setState({ likers: novosLikers })
         }
       }
     })
-    PubSub.subscribe('novos-comentarios', (topic, novoComentario) => {
-      console.log(novoComentario)
+    PubSub.subscribe('novos-comentarios', (topic, infoComentario) => {
+      if (this.props.foto.id === infoComentario.fotoId) {
+        const novosComentarios = this.state.comentarios.concat(infoComentario.novoComentario)
+        this.setState({ comentarios: novosComentarios })
+      }
     })
   }
+
   render = () => (
     <div className="foto-info">
       <div className="foto-info-likes">
@@ -64,7 +65,7 @@ class FotoInfo extends Component {
 
       <ul className="foto-info-comentarios">
         {
-          this.props.foto.comentarios.map(comentario => {
+          this.state.comentarios.map(comentario => {
             return (
               <li key={JSON.stringify(comentario)} className="comentario">
                 <Link to={`/timeline/${comentario.login}`} className="foto-info-autor">{comentario.login} </Link> {comentario.texto}
@@ -105,9 +106,7 @@ class FotoAtualizacoes extends Component {
 
   comentar = (event) => {
     event.preventDefault()
-    alert(this.comentario.value)
-    fetch({
-      url: `http://localhost:8080/api/fotos/${this.props.foto.id}/comenta?X-AUTH-TOKEN=${window.localStorage.getItem('auth-token')}`,
+    fetch(`http://localhost:8080/api/fotos/${this.props.foto.id}/comment?X-AUTH-TOKEN=${window.localStorage.getItem('auth-token')}`, {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
@@ -123,6 +122,7 @@ class FotoAtualizacoes extends Component {
       }
     }).then(novoComentario => {
       PubSub.publish('novos-comentarios', { fotoId: this.props.foto.id, novoComentario })
+      this.comentario.value = ''
     }).catch(err => {
       alert(err.message)
     })
