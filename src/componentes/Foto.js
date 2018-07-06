@@ -88,44 +88,14 @@ class FotoAtualizacoes extends Component {
 
   like = (event) => {
     event.preventDefault()
-    fetch(`http://localhost:8080/api/fotos/${this.props.foto.id}/like?X-AUTH-TOKEN=${window.localStorage.getItem('auth-token')}`, {
-      method: 'POST'
-    }).then(response => {
-      if (response.ok) {
-        return response.json()
-      } else {
-        throw new Error('Erro ao dar like na foto')
-      }
-    }).then(quemCurtiu => {
-      this.setState({ likeada: !this.state.likeada })
-      PubSub.publish('atualiza-liker', { fotoId: this.props.foto.id, quemCurtiu })
-    }).catch(error => {
-      console.log(error)
-    })
+    this.props.like(this.props.foto.id)
+    this.setState({ likeada: !this.state.likeada })
   }
 
   comentar = (event) => {
     event.preventDefault()
-    fetch(`http://localhost:8080/api/fotos/${this.props.foto.id}/comment?X-AUTH-TOKEN=${window.localStorage.getItem('auth-token')}`, {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        texto: this.comentario.value
-      })
-    }).then(res => {
-      if (res.ok) {
-        return res.json()
-      } else {
-        throw new Error('Erro ao comentar')
-      }
-    }).then(novoComentario => {
-      PubSub.publish('novos-comentarios', { fotoId: this.props.foto.id, novoComentario })
-      this.comentario.value = ''
-    }).catch(err => {
-      alert(err.message)
-    })
+    this.props.comentar(this.props.foto.id, this.comentario.value)
+    this.comentario.value = ''
   }
 
   render = () => (
@@ -150,7 +120,11 @@ export default class Foto extends Component {
       <FotoHeader foto={this.props.foto} />
       <img alt="foto" className="foto-src" src={this.props.foto.urlFoto} />
       <FotoInfo foto={this.props.foto} />
-      <FotoAtualizacoes foto={this.props.foto} />
+      <FotoAtualizacoes
+        foto={this.props.foto}
+        like={this.props.like}
+        comentar={this.props.comentar}
+      />
     </div>
   )
 }
